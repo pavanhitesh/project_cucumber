@@ -1,19 +1,14 @@
 package com.pavan.utill;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -605,46 +600,18 @@ public class WebPage
 	 * @param locatortype
 	 */
 
-	public  void switchFrame(String framelocator , String locatortype)
-	{
+	public  void switchFrame(String framelocator , String locatortype) {
+
 		WebElement element;
-		if(locatortype == "id")
-		{
-			element =getWD().findElement(By.id(framelocator));
-			getWD().switchTo().frame(element);
-		}
-
-		else if(locatortype == "X")
-		{
-			element =getWD().findElement(By.xpath(framelocator));
-			getWD().switchTo().frame(element);
-		}
-
-		else if(locatortype == "CSS")
-		{
-			element =getWD().findElement(By.cssSelector(framelocator));
-			getWD().switchTo().frame(element);
-		}
-
-		else if (locatortype == "Class")
-		{
-			element =getWD().findElement(By.className(framelocator));
-			getWD().switchTo().frame(element);
-		}
-
-		else if(locatortype == "link")
-		{
-			element =getWD().findElement(By.linkText(framelocator));
-			getWD().switchTo().frame(element);
-		}
+		element = getWebElement(framelocator, locatortype);
+		getWD().switchTo().frame(element);
 	}
 
 	/**
 	 * To switch the cursor the default web page.
 	 */
 
-	public  void switchToDefaultConatiner()
-	{
+	public  void switchToDefaultConatiner() {
 		getWD().switchTo().defaultContent();
 	}
 
@@ -659,14 +626,12 @@ public class WebPage
 
 	public  boolean isAlertPresent() throws Exception {
 
-		try
-		{
-			WebDriverWait wait = new WebDriverWait(getWD(), 5);
+		try {
+			WebDriverWait wait = new WebDriverWait(getWD(), 20);
 			wait.until(ExpectedConditions.alertIsPresent());
 			return true;
 		}
-		catch(Exception e)
-		{
+		catch(Exception e) {
 			return false;
 		}
 
@@ -679,14 +644,13 @@ public class WebPage
 	 * @param PropertyType
 	 * @return
 	 */
-	public  ArrayList<String> getDropDownValue(String Property , String PropertyType)
-	{
+	public  ArrayList<String> getDropDownValue(String Property , String PropertyType) {
+
 		ArrayList<String> ddlvalues = new ArrayList<String>();
-		WebElement SelectDDL = WebPage.getWebElement(Property, PropertyType);
+		WebElement SelectDDL = getWebElement(Property, PropertyType);
 		Select select = new Select(SelectDDL);
 		List<WebElement> values = select.getOptions();
-		for(WebElement value :values)
-		{
+		for(WebElement value :values) {
 			ddlvalues.add(value.getText());
 		}
 		return ddlvalues;
@@ -701,11 +665,10 @@ public class WebPage
 	 * @throws Exception
 	 */
 
-	public  String getAlertText() throws Exception{
+	public  String getAlertText() throws Exception {
+
 		String alerttext = null;
-
 		alerttext =getWD().switchTo().alert().getText();
-
 		return alerttext;
 	}
 
@@ -716,8 +679,8 @@ public class WebPage
 	 * @throws Exception
 	 */
 
-	public  void chooseOkOnNextConfirmation() throws Exception
-	{
+	public  void chooseOkOnNextConfirmation() throws Exception {
+
 		getWD().switchTo().alert().accept();
 	}
 
@@ -728,8 +691,8 @@ public class WebPage
 	 * @throws Exception
 	 */
 
-	public  void chooseNoOnNextConfirmation() throws Exception
-	{
+	public  void chooseNoOnNextConfirmation() throws Exception {
+
 		getWD().switchTo().alert().dismiss();
 	}
 
@@ -746,13 +709,11 @@ public class WebPage
 	 */
 
 
-	public  String windowHandle()
-	{
-		String parentWindow = WebPage.getWD().getWindowHandle();
+	public  String windowHandle() {
 
-		for(String childWindow: WebPage.getWD().getWindowHandles())
-		{
-			WebPage.getWD().switchTo().window(childWindow);
+		String parentWindow = getWD().getWindowHandle();
+		for(String childWindow: getWD().getWindowHandles()) {
+			getWD().switchTo().window(childWindow);
 		}
 		return parentWindow;
 	}
@@ -761,8 +722,8 @@ public class WebPage
 	 * to Switch between windows
 	 * @param Window
 	 */
-	public  void switchWindow(String Window)
-	{
+	public  void switchWindow(String Window) {
+		
 		getWD().switchTo().window(Window);
 	}
 
@@ -771,9 +732,8 @@ public class WebPage
 	 * @param Code
 	 */
 
-	public  void javaScrpitExcecutor(String Code)
-	{
-		JavascriptExecutor javascript = (JavascriptExecutor) WebPage.getWD();
+	public  void javaScrpitExcecutor(String Code) {
+		JavascriptExecutor javascript = (JavascriptExecutor)getWD();
 		javascript.executeScript(""+Code+"");
 	}
 
@@ -785,19 +745,24 @@ public class WebPage
 	 * @param secondstoAccept
 	 * @throws Exception
 	 */
-	public  void generateAlertandAccept(String Message, int secondstoAccept) throws Exception
-	{
+	public  void generateAlertandAccept(String Message, int secondstoAccept) throws Exception {
+		
 		javaScrpitExcecutor("alert('"+Message+"');");
 		delay(secondstoAccept);
 		chooseOkOnNextConfirmation();
 	}
 
+	
+	public void waitforPageLoadJS() {
+		
+		JavascriptExecutor javascript = (JavascriptExecutor)getWD();
+		javascript.executeScript("return document.readyState").equals("complete");
+		
+	}
 
 
-	public  void mouseclick(WebElement a,WebElement b)
-	{
-		try
-		{
+	public  void mouseclick(WebElement a,WebElement b) {
+		try {
 			String mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover',true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}";
 			((JavascriptExecutor) getWD()).executeScript(mouseOverScript,a);
 			Thread.sleep(1000);
@@ -810,98 +775,7 @@ public class WebPage
 
 		}
 	}
-	public  boolean MatchListItems(WebElement WE, Map<String,String> value ) throws InterruptedException{
-		try{
-			System.out.println("Befroe to the select object");
-			Select sel = new Select(WE);
-			Set<String> Keys= value.keySet();
-			/*for(String Key:Keys ){
-				System.out.println("Yes given value is available"+value.get(Key));
-				sel.selectByVisibleText(value.get(Key));
-			}*/
-			List<WebElement> l = sel.getOptions();
-			int k=1;
-			int i;
-			int M=1;
-			for(String Key1:Keys ){
-				for(i=0;i<l.size();i++)
-				{
-					if(value.get(Key1).equals(l.get(i).getText())){
-						k=1;
-						break;
-					}
-					else
-						k=0;
-				}
-				if(k==1){
-					System.out.println(value.get(Key1)+"is matched to " +" "+l.get(i).getText());
-				}
-				else{
-					System.out.println(value.get(Key1)+"is not matched");// to " +" "+l.get(i));*/
-					M=0;
-				}
-			}
-			if(M==1)
-				return true;
-			else
-				return false;
-		}
-		catch(Exception e){
-			return false;
-		}
-	}
-	public  boolean isDefaultSelectedItemisMatched(String Item, WebElement we){
-		try{
-			Select sel = new Select(we);
-			if(sel.getFirstSelectedOption().getText().equals(Item)){
-				System.out.println("Yes, Default selected value is"+sel.getFirstSelectedOption().getText());
-				return true;
-			}
-			else{
-				System.out.println("No, Default selected value is"+sel.getFirstSelectedOption().getText());
-				return false;
-			}
-		}
-		catch(Exception e){
-			return false;
-		}
-	}
-	public  void selectListItem(String elementlocator, String locatortype,String value){
-		try{
-			Select sel = new Select(getWebElement(elementlocator, locatortype) );
-			sel.selectByVisibleText(value);
-		}
-		catch(Exception e)
-		{
-
-		}
-	}
-	public  void fillElement(String elementlocator, String locatortype,String value){
-		try{
-			WebElement webElement = getWebElement(elementlocator, locatortype);
-			if(webElement != null){
-				webElement.clear();
-				sendKeys(elementlocator, locatortype, value);
-			}
-		}
-		catch(Exception e){
-
-		}
-	}
-
-	public  void sendKeys(WebElement we, String value){
-		we.sendKeys(value);
-	}
-
-
-	public  List<String> getListItemsText( List<WebElement> WE)
-	{
-		List<String>a= new ArrayList<>();
-		for (WebElement element: WE) {
-			a.add(element.getText());
-		}
-		return a;
-	}
+	
 
 	/**
 	 * To clear the Data
@@ -909,33 +783,10 @@ public class WebPage
 	 * @param locatortype
 	 * @throws Exception
 	 */
-	public  void Clear(String elementlocator,String locatortype) throws Exception
-	{
-		if(locatortype=="id")
-		{
-			getWD().findElement(By.id(elementlocator)).clear();
-		}
-		else if(locatortype=="X")
-		{
-			getWD().findElement(By.xpath(elementlocator)).clear();
-		}
-		else if(locatortype=="CSS")
-		{
-			getWD().findElement(By.cssSelector(elementlocator)).clear();
-		}
-		else if(locatortype=="Class")
-		{
-			getWD().findElement(By.className(elementlocator)).clear();
-		}
-		else if(locatortype=="link")
-		{
-			getWD().findElement(By.linkText(elementlocator)).clear();
-		}
+	public  void Clear(String elementlocator,String locatortype) throws Exception {
+		
+		getWebElement(elementlocator, locatortype).clear();
 	}
-
-
-
-
 
 }
 
