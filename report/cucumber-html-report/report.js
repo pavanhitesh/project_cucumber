@@ -13,7 +13,7 @@ formatter.feature({
   ]
 });
 formatter.before({
-  "duration": 7094564438,
+  "duration": 171222935251,
   "status": "passed"
 });
 formatter.scenario({
@@ -42,21 +42,4 @@ formatter.step({
 });
 formatter.match({
   "location": "Example.i_start_step()"
-});
-formatter.result({
-  "duration": 44507059965,
-  "status": "passed"
-});
-formatter.match({
-  "location": "Example.i_start_step1()"
-});
-formatter.result({
-  "duration": 56206,
-  "status": "passed"
-});
-formatter.embedding("image/png", "embedded0.png");
-formatter.after({
-  "duration": 2021506380,
-  "status": "passed"
-});
 });

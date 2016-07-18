@@ -25,6 +25,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.pavan.cvsreader.CallerContext;
+import com.pavan.cvsreader.GuiObjectsMap;
+
+
+
 
 
 
@@ -38,11 +43,11 @@ public class WebPage
 	private static WebDriver d = null;
 	private static WebDriverWait wait;
 	private static final Logger logger = LogManager.getLogger(WebPage.class);
+	private CallerContext context = new CallerContext();
 
-
-	public WebPage() {
-
-		wait = new WebDriverWait(getWD(), 40);
+	public WebPage(WebDriver d) {
+		this.d = d;
+		wait = new WebDriverWait(this.d, 40);
 	}
 
 	/**
@@ -125,6 +130,76 @@ public class WebPage
 		}
 		return d;
 
+
+	}
+
+	/**
+	 * Fetch the locator from the gui map .If the key is not found ,pass the
+	 * locator as the literal and try to perform the action.
+	 * 
+	 * @param locator
+	 * @return
+	 * @throws Exception
+	 */
+	public  String getUiObjectLocator(String locator) throws Exception {
+		 
+		String callingClass = context.getClassExecutionStack()[3].getCanonicalName();
+		System.out.println("Thecalling Class is "+context.getClassExecutionStack()[0].getCanonicalName());
+		System.out.println("Thecalling Class is "+context.getClassExecutionStack()[1].getCanonicalName());
+		System.out.println("Thecalling Class is "+context.getClassExecutionStack()[2].getCanonicalName());
+		System.out.println("Thecalling Class is "+context.getClassExecutionStack()[3].getCanonicalName());
+		System.out.println("Thecalling Class is "+context.getClassExecutionStack()[4].getCanonicalName());
+		String c1 = GuiObjectsMap.getGuiMap().get(callingClass + "." + locator);
+		if (c1 == null) {
+			callingClass = context.getClassExecutionStack()[4].getCanonicalName();
+			c1 = GuiObjectsMap.getGuiMap().get(callingClass + "." + locator);
+			if (c1 == null) {
+				/*
+				 * AppLogger.getLogger().info( "could not find key for " +
+				 * locator + ", using literal text instead");
+				 */
+				return locator;
+			}
+			return c1;
+		}
+
+		else
+			return c1;
+
+	}
+	
+	/**
+	 * Fetch the locator from the gui map .If the key is not found ,pass the
+	 * locator as the literal and try to perform the action.
+	 * 
+	 * @param locator
+	 * @return
+	 * @throws Exception
+	 */
+	public  String getUiDataMap(String label) throws Exception {
+		 
+		String callingClass = context.getClassExecutionStack()[3].getCanonicalName();
+		System.out.println("Thecalling Class is "+context.getClassExecutionStack()[0].getCanonicalName());
+		System.out.println("Thecalling Class is "+context.getClassExecutionStack()[1].getCanonicalName());
+		System.out.println("Thecalling Class is "+context.getClassExecutionStack()[2].getCanonicalName());
+		System.out.println("Thecalling Class is "+context.getClassExecutionStack()[3].getCanonicalName());
+		System.out.println("Thecalling Class is "+context.getClassExecutionStack()[4].getCanonicalName());
+		String c1 = GuiObjectsMap.getDataMap().get(callingClass + "." + label);
+		if (c1 == null) {
+			callingClass = context.getClassExecutionStack()[4].getCanonicalName();
+			c1 = GuiObjectsMap.getDataMap().get(callingClass + "." + label);
+			if (c1 == null) {
+				/*
+				 * AppLogger.getLogger().info( "could not find key for " +
+				 * locator + ", using literal text instead");
+				 */
+				return label;
+			}
+			return c1;
+		}
+
+		else
+			return c1;
 
 	}
 
