@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.pavan.cvsreader.GuiObjectsMap;
+import com.pavan.pageactions.LoginPageActions;
 import com.pavan.utill.WebPage;
 
 import cucumber.api.Scenario;
@@ -19,11 +20,12 @@ public class Example {
 	private Scenario scenario;
 	WebDriver driver;
 	private static final String BasePath = System.getProperty("user.dir")+"//src//main//java//com//pavan//definitions";
-	
+	private static final String BasePathObj = System.getProperty("user.dir")+"//src//main//java//com//pavan//pageactions";
 	@Before
 	public void beforeScenario(Scenario scenario) throws Exception {
 		System.out.println("executed before method");
 		GuiObjectsMap.loadDataFiles(BasePath);
+		GuiObjectsMap.loadGuiMapFiles(BasePathObj);
 		this.scenario=scenario;
 		driver = new FirefoxDriver();
 	}
@@ -46,7 +48,9 @@ public class Example {
 		System.out.println("Started the Step");
 		WebPage page = new WebPage(driver);
 		System.out.println("The data is "+page.getUiDataMap("username"));
-		driver.get("https://www.google.co.in/?gfe_rd=cr&ei=gcxvV_m9AsuL8QfU3LjQAg&gws_rd=ssl");
+		LoginPageActions login = new LoginPageActions(driver);
+		login.login();
+		//driver.get("https://www.google.co.in/?gfe_rd=cr&ei=gcxvV_m9AsuL8QfU3LjQAg&gws_rd=ssl");
 	}
 	
 	@Then("^I Start Step1$")

@@ -11,21 +11,21 @@
       <![CDATA[<div "scenario">Scenario: To Start Cucumber</div>]]>
     </line>
     <line>
-      <![CDATA[<div "result">Given  I Start Step (passed : 5s)</div>]]>
+      <![CDATA[<div "result">Given  I Start Step (passed : 0s)</div>]]>
     </line>
     <line>
       <![CDATA[<div "result">Then  I Start Step1 (passed : 0s)</div>]]>
     </line>
   </reporter-output>
-  <suite name="XTBillS Firefox" duration-ms="14115" started-at="2016-07-18T18:11:56Z" finished-at="2016-07-18T18:12:11Z">
+  <suite name="XTBillS Firefox" duration-ms="6948" started-at="2016-07-23T12:26:25Z" finished-at="2016-07-23T12:26:32Z">
     <groups>
       <group name="cucumber">
         <method signature="AbstractTestNGCucumberTests.run_cukes()[pri:0, instance:com.pavan.runner.TestRunner@2f686d1f]" name="run_cukes" class="cucumber.api.testng.AbstractTestNGCucumberTests"/>
       </group> <!-- cucumber -->
     </groups>
-    <test name="To Test Cucumber" duration-ms="14115" started-at="2016-07-18T18:11:56Z" finished-at="2016-07-18T18:12:11Z">
+    <test name="To Test Cucumber" duration-ms="6948" started-at="2016-07-23T12:26:25Z" finished-at="2016-07-23T12:26:32Z">
       <class name="com.pavan.runner.TestRunner">
-        <test-method status="PASS" signature="run_cukes()[pri:0, instance:com.pavan.runner.TestRunner@2f686d1f]" name="run_cukes" duration-ms="14084" started-at="2016-07-18T23:41:57Z" description="Runs Cucumber Features" finished-at="2016-07-18T23:42:11Z">
+        <test-method status="PASS" signature="run_cukes()[pri:0, instance:com.pavan.runner.TestRunner@2f686d1f]" name="run_cukes" duration-ms="6916" started-at="2016-07-23T17:56:25Z" description="Runs Cucumber Features" finished-at="2016-07-23T17:56:32Z">
           <reporter-output>
             <line>
               <![CDATA[<div "featureFile">Feature File: example.feature</div>]]>
@@ -37,7 +37,7 @@
               <![CDATA[<div "scenario">Scenario: To Start Cucumber</div>]]>
             </line>
             <line>
-              <![CDATA[<div "result">Given  I Start Step (passed : 5s)</div>]]>
+              <![CDATA[<div "result">Given  I Start Step (passed : 0s)</div>]]>
             </line>
             <line>
               <![CDATA[<div "result">Then  I Start Step1 (passed : 0s)</div>]]>

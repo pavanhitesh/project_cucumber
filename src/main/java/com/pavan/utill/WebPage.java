@@ -178,7 +178,7 @@ public class WebPage
 	 */
 	public  String getUiDataMap(String label) throws Exception {
 		 
-		String callingClass = context.getClassExecutionStack()[3].getCanonicalName();
+		String callingClass = context.getClassExecutionStack()[2].getCanonicalName();
 		System.out.println("Thecalling Class is "+context.getClassExecutionStack()[0].getCanonicalName());
 		System.out.println("Thecalling Class is "+context.getClassExecutionStack()[1].getCanonicalName());
 		System.out.println("Thecalling Class is "+context.getClassExecutionStack()[2].getCanonicalName());
